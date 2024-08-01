@@ -2,4 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#035AA6</color>
+    <color name="colorPrimaryDark">#81A65D</color>
+    <color name="colorAccent">#023E73</color>
+    <color name="your_status_bar_color">#4CAF50</color> <!-- rojo por ejemplo -->
+    <color name="your_navigation_bar_color">#FFFFFF</color>
+    <color name="button_cancel_bg">#F44336</color> <!-- Rojo para cancelar -->
+    <color name="button_cancel_text">#FFFFFF</color> <!-- Texto blanco -->
+
+    <color name="button_save_bg">#4CAF50</color> <!-- Verde para guardar -->
+    <color name="button_save_text">#FFFFFF</color> <!-- Texto blanco -->
+
+    <color name="button_replace_bg">#FFC107</color> <!-- Amarillo para reemplazar -->
+    <color name="button_replace_text">#FFFFFF</color> <!-- Texto blanco -->
 </resources>

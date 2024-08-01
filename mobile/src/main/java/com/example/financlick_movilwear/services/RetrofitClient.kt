@@ -20,7 +20,6 @@ object RetrofitClient {
                 val originalRequest = chain.request()
                 val requestBuilder = originalRequest.newBuilder()
 
-                // Añadir el token si está disponible
                 token?.let {
                     requestBuilder.addHeader("Authorization", "Bearer $it")
                 }
@@ -30,6 +29,9 @@ object RetrofitClient {
             }
             .sslSocketFactory(createUnsafeSslSocketFactory(), createTrustManager())
             .hostnameVerifier { _, _ -> true }
+            .connectTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .readTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+            .writeTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
             .build()
     }
 

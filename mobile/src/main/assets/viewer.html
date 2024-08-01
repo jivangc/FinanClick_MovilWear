@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+    <style>
+        #pdf-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .pdf-page {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<div id="pdf-container"></div>
+<script>
+    function renderPDF(encodedBase64PDF) {
+        var base64PDF = decodeURIComponent(encodedBase64PDF);
+        try {
+            var pdfData = atob(base64PDF);
+            var loadingTask = pdfjsLib.getDocument({data: pdfData});
+            loadingTask.promise.then(function(pdf) {
+                var pdfContainer = document.getElementById('pdf-container');
+                pdfContainer.innerHTML = ''; // Clear previous pages
+
+                for (var pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                    pdf.getPage(pageNum).then(function(page) {
+                        var canvas = document.createElement('canvas');
+                        canvas.className = 'pdf-page';
+                        var context = canvas.getContext('2d');
+
+                        // Get viewport and calculate scale
+                        var viewport = page.getViewport({scale: 1});
+                        var scale = Math.min(window.innerWidth / viewport.width, window.innerHeight / viewport.height);
+                        viewport = page.getViewport({scale: scale});
+
+                        canvas.height = viewport.height;
+                        canvas.width = viewport.width;
+
+                        var renderContext = {
+                            canvasContext: context,
+                            viewport: viewport
+                        };
+
+                        page.render(renderContext).promise.then(function() {
+                            pdfContainer.appendChild(canvas);
+                        });
+                    });
+                }
+            }).catch(function(error) {
+                console.error("Error loading PDF: ", error);
+            });
+        } catch (error) {
+            console.error("Error processing PDF data: ", error);
+        }
+    }
+
+    // Ajustar el tamaño del canvas al cambiar el tamaño de la ventana
+    window.addEventListener('resize', function() {
+        var canvas = document.querySelectorAll('.pdf-page');
+        canvas.forEach(function(c) {
+            var context = c.getContext('2d');
+            context.clearRect(0, 0, c.width, c.height);
+        });
+        renderPDF(currentBase64PDF);
+    });
+
+    var currentBase64PDF = ''; // Variable global para almacenar el PDF actual
+
+    function loadPDF(base64PDF) {
+        currentBase64PDF = base64PDF;
+        renderPDF(currentBase64PDF);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Cambiar el color de la barra de estado -->
+        <item name="android:statusBarColor">@color/your_status_bar_color</item>
+        <!-- Cambiar el color de la barra de navegación -->
+        <item name="android:navigationBarColor">@color/your_navigation_bar_color</item>
+    </style>
+</resources>

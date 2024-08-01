@@ -4,11 +4,15 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Build
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.financlick_movilwear.config.SessionManager
@@ -26,13 +30,13 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-
     lateinit var contexto: Context
     lateinit var emailInputLayout: TextInputLayout
     lateinit var emailInput: TextInputEditText
     lateinit var contrasenaInputLayout: TextInputLayout
     lateinit var contrasenaInput: TextInputEditText
     lateinit var sessionManager: SessionManager
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         contrasenaInput = findViewById<TextInputEditText>(R.id.passwordEditText)
         emailInputLayout = findViewById<TextInputLayout>(R.id.emailInputLayout)
         emailInput = findViewById<TextInputEditText>(R.id.usernameEditText)
+        progressBar = findViewById(R.id.progressBar)
 
         val emailParam = intent.getStringExtra("email")
         if(emailParam != null){
@@ -61,31 +66,41 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun login (param: LoginModel){
+    fun login(param: LoginModel) {
+        // Mostrar el ProgressBar
+        progressBar.visibility = View.VISIBLE
         Toast.makeText(this, "Iniciando Sesion", Toast.LENGTH_SHORT).show()
+
         RetrofitClient.instance.postLogin(param).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                // Ocultar el ProgressBar
+                progressBar.visibility = View.GONE
+
                 if (response.isSuccessful) {
-                    var stringJson = response.body()?.string();
-                    val gson = Gson()
+                    val stringJson = response.body()?.string()
                     val jsonObject = JsonParser.parseString(stringJson).asJsonObject
                     val token = jsonObject.get("token")?.asString
                     Log.i("MainActivity", "Token: $token")
                     if (token != null) {
                         getCurrentUser(token)
-                        Toast.makeText(contexto, "Bienvenido ${sessionManager.getUser()?.usuario}", Toast.LENGTH_SHORT).show()
                         val intent = Intent(contexto, HomeActivity::class.java)
                         startActivity(intent)
-                    }else{
+                        finish()
+                    } else {
                         Toast.makeText(contexto, "Ha ocurrido un error al iniciar sesion, intente nuevamente", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(contexto, "${response.errorBody()?.string()}", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(contexto, response.errorBody()?.string(), Toast.LENGTH_SHORT).show()
                 }
             }
+
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                // Handle failure
+                // Ocultar el ProgressBar
+                progressBar.visibility = View.GONE
+
+                // Manejar la falla
                 Log.e("MainActivity", "Failure: ${t.message}")
+                Toast.makeText(contexto, "Fallo en la conexión: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -112,19 +127,35 @@ class MainActivity : AppCompatActivity() {
         RetrofitClient.instance.getDetail().enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    val stringJson = response.body()?.string();
+                    val stringJson = response.body()?.string()
                     val gson = Gson()
                     val jsonObject = JsonParser.parseString(stringJson).asJsonObject
                     Log.i("MainActivityRaw", "Response: $stringJson")
-                    val usuario = gson.fromJson(jsonObject.get("usuarioCliente").asJsonObject, UsuarioModel::class.java)
-                    Log.i("MainActivity", "Usuario: ${usuario.usuario}")
-                    sessionManager.saveUser(jsonObject, token)
+
+                    val usuario = jsonObject.get("usuarioCliente")?.asJsonObject
+                    if (usuario != null) {
+                        Log.i("MainActivity", "Usuario: ${usuario.get("usuario")?.asString}")
+
+                        // Verifica los valores antes de guardarlos
+                        Log.i("MainActivity", "Saving user with token: $token")
+                        Log.i("MainActivity", "UsuarioCliente JSON: ${usuario.toString()}")
+
+                        sessionManager.saveUser(jsonObject, token)
+
+                        // Verifica si los valores se guardaron correctamente
+                        val savedUser = sessionManager.getUser()
+                        val savedToken = sessionManager.getToken()
+                        Log.i("MainActivity", "Saved User: ${savedUser?.usuario}")
+                        Log.i("MainActivity", "Saved Token: $savedToken")
+                    } else {
+                        Log.e("MainActivity", "UsuarioCliente is null")
+                    }
                 } else {
                     Toast.makeText(
                         contexto,
                         "${response.errorBody()?.string()}",
                         Toast.LENGTH_SHORT
-                    ).show();
+                    ).show()
                 }
             }
 

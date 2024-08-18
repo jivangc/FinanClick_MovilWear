@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">FinanClick_MovilWear</string>
+    <string name="app_name">FinanClick</string>
+
+    <string-array name="metodo_calculo_array">
+        <item>Amortizado</item>
+        <!-- Add other options if needed -->
+    </string-array>
+    <string-array name="submetodo_array">
+        <item>Saldos Insolutos</item>
+        <item>Saldos Globales</item>
+        <!-- Add other options if needed -->
+    </string-array>
+    <string-array name="periodicidad_array">
+        <item>Quincenal</item>
+        <item>Mensual</item>
+        <item>Anual</item>
+        <!-- Add other options if needed -->
+    </string-array>
 </resources>

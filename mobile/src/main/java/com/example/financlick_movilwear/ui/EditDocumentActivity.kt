@@ -73,6 +73,33 @@ class EditDocumentActivity : AppCompatActivity() {
             }
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = resources.getColor(R.color.your_status_bar_color)
+            window.navigationBarColor = resources.getColor(R.color.your_navigation_bar_color)
+        }
+
+        // MENU BUTTONS
+        val btnMenu: ImageButton = findViewById(R.id.btnMenu)
+        val btnRequests: ImageButton = findViewById(R.id.btnRequests)
+        val btnNotifications: ImageButton = findViewById(R.id.btnNotifications)
+        btnMenu.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
+
+        btnRequests.setOnClickListener{
+            val intent = Intent(this, RequestsActivty::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
+
+        btnNotifications.setOnClickListener{
+            val intent = Intent(this, NotificationsActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
+
         val replaceButton: Button = findViewById(R.id.button_replace)
         val saveButton: Button = findViewById(R.id.button_save)
         val cancelButton: Button = findViewById(R.id.button_cancel)
@@ -179,6 +206,7 @@ class EditDocumentActivity : AppCompatActivity() {
             Toast.makeText(contexto, "No se encontraron documentos, sube uno", Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(contexto, "Cargando...", Toast.LENGTH_SHORT).show()
+            docBase64 = removePrefixIfExists(docBase64)
             webView.webViewClient = object : WebViewClient() {
                 override fun onPageFinished(view: WebView, url: String) {
                     val encodedBase64 = Uri.encode(docBase64)
@@ -282,5 +310,13 @@ class EditDocumentActivity : AppCompatActivity() {
         builder.show()
     }
 
+    fun removePrefixIfExists(base64: String): String {
+        val prefix = "data:application/pdf;base64,"
+        return if (base64.startsWith(prefix)) {
+            base64.removePrefix(prefix)
+        } else {
+            base64
+        }
+    }
 
 }

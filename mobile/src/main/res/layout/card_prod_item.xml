@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Ícono -->
+        <ImageView
+            android:id="@+id/cardIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/producto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/cardTitle"/>
+
+        <!-- Título de la tarjeta -->
+        <TextView
+            android:id="@+id/cardTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Título del Producto"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/cardIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cardButton"
+            android:layout_marginStart="8dp"/>
+
+        <!-- Descripción de la tarjeta -->
+        <TextView
+            android:id="@+id/cardDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Descripción del Producto"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="@id/cardTitle"
+            app:layout_constraintTop_toBottomOf="@id/cardTitle"
+            app:layout_constraintEnd_toStartOf="@id/cardButton"/>
+
+        <!-- Periodicidad -->
+        <TextView
+            android:id="@+id/cardPeriodicidad"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Periodicidad: Mensual"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="@id/cardDescription"
+            app:layout_constraintTop_toBottomOf="@id/cardDescription"
+            app:layout_constraintEnd_toStartOf="@id/cardButton"/>
+
+        <!-- Número de pagos -->
+        <TextView
+            android:id="@+id/cardNumPagos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Número de pagos: 12"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="@id/cardPeriodicidad"
+            app:layout_constraintTop_toBottomOf="@id/cardPeriodicidad"
+            app:layout_constraintEnd_toStartOf="@id/cardButton"/>
+
+        <!-- Interés anual -->
+        <TextView
+            android:id="@+id/cardInteresAnual"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Interés Anual: 12%"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="@id/cardNumPagos"
+            app:layout_constraintTop_toBottomOf="@id/cardNumPagos"
+            app:layout_constraintEnd_toStartOf="@id/cardButton"/>
+
+        <!-- IVA -->
+        <TextView
+            android:id="@+id/cardIVA"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="IVA: 16%"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="@id/cardInteresAnual"
+            app:layout_constraintTop_toBottomOf="@id/cardInteresAnual"
+            app:layout_constraintEnd_toStartOf="@id/cardButton"/>
+
+        <!-- Estatus de la tarjeta -->
+        <TextView
+            android:id="@+id/cardStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:text="Estatus: Activo"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintStart_toStartOf="@id/cardIVA"
+            app:layout_constraintTop_toBottomOf="@id/cardIVA"
+            app:layout_constraintEnd_toStartOf="@id/cardButton"/>
+
+        <!-- Botón opcional -->
+        <Button
+            android:id="@+id/cardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleccionar"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:drawableLeft="@drawable/simular"
+            android:drawablePadding="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

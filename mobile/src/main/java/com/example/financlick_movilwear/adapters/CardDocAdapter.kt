@@ -3,6 +3,7 @@ package com.example.financlick_movilwear.adapters
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.pdf.PdfRenderer
 import android.os.ParcelFileDescriptor
 import android.util.Base64
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.financlick_movilwear.R
@@ -32,7 +34,8 @@ class CardDocAdapter(private var items: List<CardDocItem>) : RecyclerView.Adapte
 
         try {
             // Decodifica la imagen base64
-            val decodedString = Base64.decode(cardData.imageBase64, Base64.DEFAULT)
+            val base64Image = removePrefixIfExists(cardData.imageBase64)
+            val decodedString = Base64.decode(base64Image, Base64.DEFAULT)
             val bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
 
             if (cardData.isPdf) {
@@ -60,7 +63,15 @@ class CardDocAdapter(private var items: List<CardDocItem>) : RecyclerView.Adapte
 
         holder.titleView.text = cardData.title
         holder.descriptionView.text = cardData.description
-        holder.statusView.text = cardData.status
+        holder.statusView.text = cardData.status.toUpperCase()
+
+        when (cardData.status.toLowerCase()){
+            "pendiente" -> holder.statusView.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.pendiente))
+            "aprobado" -> holder.statusView.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.aceptado))
+            "rechazado" -> holder.statusView.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.rechazado))
+            "en revision" -> holder.statusView.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.pendiente))
+        }
+
         holder.cardButton.setOnClickListener {
             val intent = Intent(holder.itemView.context, EditDocumentActivity::class.java)
             intent.putExtra("docs", cardData.doc.idDocumentoCliente.toString())
@@ -78,6 +89,15 @@ class CardDocAdapter(private var items: List<CardDocItem>) : RecyclerView.Adapte
         notifyDataSetChanged()
     }
 
+    fun removePrefixIfExists(base64: String): String {
+        val prefix = "data:application/pdf;base64,"
+        return if (base64.startsWith(prefix)) {
+            base64.removePrefix(prefix)
+        } else {
+            base64
+        }
+    }
+
     inner class CardDocViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.cardImage)
         val titleView: TextView = view.findViewById(R.id.cardTitle)
@@ -85,4 +105,6 @@ class CardDocAdapter(private var items: List<CardDocItem>) : RecyclerView.Adapte
         val statusView: TextView = view.findViewById(R.id.status)
         val cardButton: Button = view.findViewById(R.id.cardButton)
     }
+
+
 }

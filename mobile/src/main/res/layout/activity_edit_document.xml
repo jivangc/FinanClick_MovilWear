@@ -128,29 +128,59 @@
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <ImageView
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="16dp"
-                    android:src="@drawable/pagina_de_inicio"
-                    android:tint="#1E88E5" />
+                    android:layout_weight="1">
 
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="16dp"
-                    android:src="@drawable/solicitudes"
-                    android:tint="#1E88E5" />
+                    <ImageButton
+                        android:id="@+id/btnMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.45"
+                        android:scaleY="0.45"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/pagina_de_inicio"
+                        android:tint="#1E88E5" />
 
-                <ImageView
+                </FrameLayout>
+
+                <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="16dp"
-                    android:src="@drawable/notificaciones"
-                    android:tint="#1E88E5" />
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnRequests"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.45"
+                        android:scaleY="0.45"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/solicitudes"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/btnNotifications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:scaleX="0.45"
+                        android:scaleY="0.45"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/notificaciones"
+                        android:tint="#1E88E5" />
+
+                </FrameLayout>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

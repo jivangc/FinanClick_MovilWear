@@ -10,7 +10,9 @@ import java.security.cert.X509Certificate
 import javax.net.ssl.X509TrustManager
 
 object RetrofitClient {
-    private const val BASE_URL = "https://192.168.1.9:5000/api/"
+    private const val BASE_URL = "https://192.168.137.1:5000/api/"
+    // REMOTE CONTROL LOCALHOST
+    //private const val BASE_URL = "http://10.0.2.2:5000/api/"
 
     private var token: String? = null
 

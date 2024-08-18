@@ -12,4 +12,10 @@
         <!-- Cambiar el color de la barra de navegación -->
         <item name="android:navigationBarColor">@color/your_navigation_bar_color</item>
     </style>
+
+    <!-- Estilo personalizado para el DatePickerDialog -->
+    <style name="CustomDatePicker" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">#035AA6</item>
+    </style>
+
 </resources>

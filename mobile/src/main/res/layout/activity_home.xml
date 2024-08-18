@@ -173,6 +173,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/txtAprobado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -211,12 +212,13 @@
                     android:textStyle="bold" />
 
                 <TableLayout
+                    android:id="@+id/tablaSolicitudes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:stretchColumns="1">
 
-                    <!-- Table Header -->
+                    <!-- Encabezado de la tabla -->
                     <TableRow>
                         <TextView
                             android:layout_width="wrap_content"
@@ -240,131 +242,24 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="8dp"
-                            android:text="Documento"
-                            android:textColor="#757575"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
                             android:text="Estado"
                             android:textColor="#757575"
                             android:textSize="14sp"
                             android:textStyle="bold" />
                     </TableRow>
 
-                    <!-- Request Item 1 -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="FNCL-0001"
-                            android:textColor="#000000"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="$ 2,000.00"
-                            android:textColor="#000000"
-                            android:textSize="14sp" />
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="30dp"
-                            android:padding="8dp"
-                            android:src="@drawable/informacion_solicitud"
-                            android:tint="#000000" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="APROBADA"
-                            android:textColor="#4CAF50"
-                            android:textSize="14sp" />
-                    </TableRow>
-
-                    <!-- Request Item 2 -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="FNCL-0002"
-                            android:textColor="#000000"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="$ 500.00"
-                            android:textColor="#000000"
-                            android:textSize="14sp" />
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="30dp"
-                            android:padding="8dp"
-                            android:src="@drawable/informacion_solicitud"
-                            android:tint="#000000" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="APROBADA"
-                            android:textColor="#4CAF50"
-                            android:textSize="14sp" />
-                    </TableRow>
-
-                    <!-- Request Item 3 -->
-                    <TableRow>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="FNCL-0003"
-                            android:textColor="#000000"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="$ 5,000.00"
-                            android:textColor="#000000"
-                            android:textSize="14sp" />
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="30dp"
-                            android:padding="8dp"
-                            android:src="@drawable/informacion_solicitud"
-                            android:tint="#000000" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="8dp"
-                            android:text="RECHAZADA"
-                            android:textColor="#F44336"
-                            android:textSize="14sp" />
-                    </TableRow>
                 </TableLayout>
 
-                <TextView
+
+                <Button
+                    android:id="@+id/btnVerSolicitudes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_gravity="center_horizontal"
                     android:text="Ver Todo"
                     android:textColor="#1E88E5"
+                    android:background="?attr/selectableItemBackgroundBorderless"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -433,7 +328,6 @@
                 </FrameLayout>
 
             </LinearLayout>
-
 
 
         </RelativeLayout>

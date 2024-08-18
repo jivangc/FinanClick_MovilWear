@@ -57,26 +57,6 @@
         android:text="Acceder"
         android:textColor="#FFFFFF" />
 
-    <TextView
-        android:id="@+id/noAccountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/loginButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="No tengo una cuenta"
-        android:textColor="#9E9E9E" />
-
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/noAccountTextView"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#4CAF50"
-        android:text="Registrar"
-        android:textColor="#FFFFFF" />
-
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"

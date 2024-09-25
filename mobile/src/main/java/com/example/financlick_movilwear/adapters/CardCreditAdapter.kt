@@ -2,28 +2,19 @@ package com.example.financlick_movilwear.adapters
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
-import android.icu.text.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.financlick_movilwear.MainActivity
 import com.example.financlick_movilwear.items.CardCreditItem
 import com.example.financlick_movilwear.R
-import com.example.financlick_movilwear.items.CardProductItem
-import com.example.financlick_movilwear.models.CreditoModel
-import com.example.financlick_movilwear.ui.RequestsActivty
-import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class CardCreditAdapter (private var items: List<CardCreditItem>, val context:Context): RecyclerView.Adapter<CardCreditAdapter.CardCreditViewHolder>() {
+class CardCreditAdapter (private var itemsCard: List<CardCreditItem>, val context:Context): RecyclerView.Adapter<CardCreditAdapter.CardCreditViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewTye: Int): CardCreditViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -32,13 +23,13 @@ class CardCreditAdapter (private var items: List<CardCreditItem>, val context:Co
     }
 
     override fun onBindViewHolder(holder: CardCreditViewHolder, position: Int) {
-        val credito = items[position]
+        val creditoItem = itemsCard[position]
 
-        holder.titleView.text = credito.producto
-        holder.montoView.text = "$ " + credito.monto.toString()
-        holder.estatusView.text = credito.estatus
+        holder.titleView.text = creditoItem.producto
+        holder.montoView.text = "$ " + creditoItem.monto.toString()
+        holder.estatusView.text = creditoItem.estatus
 
-        when (credito.estatus.toLowerCase()) {
+        when (creditoItem.estatus.toLowerCase()) {
             "pendiente" -> holder.estatusView.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.pendiente))
             "firmado" -> holder.estatusView.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.aceptado))
             "en curso" -> holder.estatusView.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.aceptado))
@@ -46,16 +37,16 @@ class CardCreditAdapter (private var items: List<CardCreditItem>, val context:Co
             else -> holder.estatusView.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.revision)) // Color por defecto en caso de que no coincida con ningún estatus
         }
 
-        holder.creditoView.text = credito.idCredito.toString()
+        holder.creditoView.text = creditoItem.idCredito.toString()
         holder.buttonView.setOnClickListener{
-            showDetailDialog(context, credito)
+            showDetailDialog(context, creditoItem)
         }
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = itemsCard.size
 
     fun updateItems(newProducts: List<CardCreditItem>) {
-        items = newProducts
+        itemsCard = newProducts
         notifyDataSetChanged()
     }
 
@@ -69,13 +60,12 @@ class CardCreditAdapter (private var items: List<CardCreditItem>, val context:Co
 
     private fun showDetailDialog(context: Context, credito: CardCreditItem) {
         // Suponemos que fechaActivacion tiene el formato "yyyy-MM-dd"
-        // Ajusta este formato según tu caso
         val inputFormat = SimpleDateFormat("yyyy-MM-dd")
         val outputFormat = SimpleDateFormat("dd/MM/yyyy")
 
-        val fechaActivacionString = credito.fechaActivacion ?: ""
+        val fechaActivacionStr = credito.fechaActivacion ?: ""
         val fechaActivacionDate = try {
-            inputFormat.parse(fechaActivacionString)
+            inputFormat.parse(fechaActivacionStr)
         } catch (e: Exception) {
             Date() // Fecha por defecto si la conversión falla
         }

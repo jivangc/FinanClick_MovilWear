@@ -21,23 +21,23 @@ class CardProductAdapter(private var items: List<CardProductItem>): RecyclerView
     }
 
     override fun onBindViewHolder(holder: CardProductViewHolder, position: Int) {
-        val product = items[position]
+        val productItem = items[position]
         val gson = Gson()
 
         // Configura los datos de la tarjeta
-        holder.titleView.text = product.nombreProducto
-        holder.descriptionView.text = product.metodoCalculo
-        holder.periodicidadView.text = "Periodicidad: ${product.periodicidad}"
-        holder.numPagosView.text = "Número de pagos: ${product.numPagos}"
-        holder.interesAnualView.text = "Interés Anual: ${product.interesAnual}%"
-        holder.ivaView.text = "IVA: ${product.iva}%"
-        holder.statusView.text = "Estatus: ${if (product.estatus == 1) "Activo" else "Inactivo"}"
+        holder.titleView.text = productItem.nombreProducto
+        holder.descriptionView.text = productItem.metodoCalculo
+        holder.periodicidadView.text = "Periodicidad: ${productItem.periodicidad}"
+        holder.numPagosView.text = "Número de pagos: ${productItem.numPagos}"
+        holder.interesAnualView.text = "Interés Anual: ${productItem.interesAnual}%"
+        holder.ivaView.text = "IVA: ${productItem.iva}%"
+        holder.statusView.text = "Estatus: ${if (productItem.estatus == 1) "Activo" else "Inactivo"}"
 
         // Configura el botón
         holder.buttonView.setOnClickListener {
             val intent = Intent(holder.itemView.context, SimulationFormActivity::class.java)
-            Log.i("CardProductAdapter", "Product clicked: ${gson.toJson(product)}")
-            intent.putExtra("product", gson.toJson(product))
+            Log.i("CardProductAdapter", "Product clicked: ${gson.toJson(productItem)}")
+            intent.putExtra("product", gson.toJson(productItem))
             holder.itemView.context.startActivity(intent)
         }
     }

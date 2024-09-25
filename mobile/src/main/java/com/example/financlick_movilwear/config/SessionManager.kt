@@ -28,26 +28,26 @@ class SessionManager (context: Context){
         editor.putString("user", usuarioCliente?.toString() ?: "{}")
         Log.d("saveUser", "User: ${usuarioCliente?.toString()}")
 
-        val cliente = userRaw.get("cliente")?.asJsonObject
-        editor.putString("cliente", cliente?.toString() ?: "{}")
-        Log.d("saveUser", "Cliente: ${cliente?.toString()}")
-        if (cliente != null) {
-            val regimenFiscal = cliente.get("regimenFiscal")?.asString
-            if (regimenFiscal != null) {
-                if (regimenFiscal == "FISICA") {
+        val clienteObj = userRaw.get("cliente")?.asJsonObject
+        editor.putString("cliente", clienteObj?.toString() ?: "{}")
+        Log.d("saveUser", "Cliente: ${clienteObj?.toString()}")
+        if (clienteObj != null) {
+            val regimenFiscalStr = clienteObj.get("regimenFiscal")?.asString
+            if (regimenFiscalStr != null) {
+                if (regimenFiscalStr == "FISICA") {
                     editor.putString("user_type", "FISICA")
-                    val persona = userRaw.get("persona")?.asJsonObject
-                    editor.putString("person", persona?.toString() ?: "{}")
-                    Log.d("saveUser", "Person (FISICA): ${persona?.toString()}")
+                    val personaObj = userRaw.get("persona")?.asJsonObject
+                    editor.putString("person", personaObj?.toString() ?: "{}")
+                    Log.d("saveUser", "Person (FISICA): ${personaObj?.toString()}")
 
                     val dataFisica = userRaw.get("datosClienteFisica")?.asJsonObject
                     editor.putString("data", dataFisica?.toString() ?: "{}")
                     Log.d("saveUser", "Data (FISICA): ${dataFisica?.toString()}")
                 } else {
                     editor.putString("user_type", "MORAL")
-                    val personaMoral = userRaw.get("personaMoral")?.asJsonObject
-                    editor.putString("person", personaMoral?.toString() ?: "{}")
-                    Log.d("saveUser", "Person (MORAL): ${personaMoral?.toString()}")
+                    val personaMoralObj = userRaw.get("personaMoral")?.asJsonObject
+                    editor.putString("person", personaMoralObj?.toString() ?: "{}")
+                    Log.d("saveUser", "Person (MORAL): ${personaMoralObj?.toString()}")
 
                     val dataMoral = userRaw.get("datosClienteMoral")?.asJsonObject
                     editor.putString("data", dataMoral?.toString() ?: "{}")
@@ -83,11 +83,11 @@ class SessionManager (context: Context){
 
         return try {
             if (userType == "FISICA") {
-                val persona = gson.fromJson(json, PersonaFisica::class.java)
-                gson.toJsonTree(persona).asJsonObject
+                val personaObj = gson.fromJson(json, PersonaFisica::class.java)
+                gson.toJsonTree(personaObj).asJsonObject
             } else {
-                val persona = gson.fromJson(json, PersonaMoral::class.java)
-                gson.toJsonTree(persona).asJsonObject
+                val personaObj = gson.fromJson(json, PersonaMoral::class.java)
+                gson.toJsonTree(personaObj).asJsonObject
             }
         } catch (e: JsonSyntaxException) {
             Log.e("SessionManager", "Error parsing JSON", e)
@@ -96,10 +96,10 @@ class SessionManager (context: Context){
     }
 
     fun getClient(): JsonObject? {
-        val client = sharedPreferences.getString("cliente", null)
+        val clientStr = sharedPreferences.getString("cliente", null)
         val gson = Gson()
         return try {
-            gson.fromJson(client, JsonObject::class.java)
+            gson.fromJson(clientStr, JsonObject::class.java)
         } catch (e: JsonSyntaxException) {
             Log.e("SessionManager", "Error parsing JSON", e)
             null // Or handle the error appropriately
@@ -110,12 +110,12 @@ class SessionManager (context: Context){
         val userType = sharedPreferences.getString("user_type", null)
         if (userType.equals("FISICA")){
             val json = sharedPreferences.getString("data", null)
-            val datos = Gson().fromJson(json, DatosClienteFisica::class.java)
-            return Gson().toJsonTree(datos).asJsonObject
+            val datosObj = Gson().fromJson(json, DatosClienteFisica::class.java)
+            return Gson().toJsonTree(datosObj).asJsonObject
         }else{
             val json = sharedPreferences.getString("data", null)
-            val datos = Gson().fromJson(json, DatosClienteMoral::class.java)
-            return Gson().toJsonTree(datos).asJsonObject
+            val datosObj = Gson().fromJson(json, DatosClienteMoral::class.java)
+            return Gson().toJsonTree(datosObj).asJsonObject
         }
     }
 

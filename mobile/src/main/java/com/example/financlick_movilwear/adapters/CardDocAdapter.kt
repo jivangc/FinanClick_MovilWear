@@ -3,7 +3,6 @@ package com.example.financlick_movilwear.adapters
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.graphics.pdf.PdfRenderer
 import android.os.ParcelFileDescriptor
 import android.util.Base64
@@ -14,7 +13,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.financlick_movilwear.R
 import com.example.financlick_movilwear.items.CardDocItem
@@ -44,9 +42,9 @@ class CardDocAdapter(private var items: List<CardDocItem>) : RecyclerView.Adapte
 
                 val pdfRenderer = PdfRenderer(ParcelFileDescriptor.open(tempFile, ParcelFileDescriptor.MODE_READ_ONLY))
                 val page = pdfRenderer.openPage(0)
-                val width = page.width
-                val height = page.height
-                val pdfBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+                val widthInt = page.width
+                val heightInt = page.height
+                val pdfBitmap = Bitmap.createBitmap(widthInt, heightInt, Bitmap.Config.ARGB_8888)
                 page.render(pdfBitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
                 page.close()
                 pdfRenderer.close()
@@ -90,9 +88,9 @@ class CardDocAdapter(private var items: List<CardDocItem>) : RecyclerView.Adapte
     }
 
     fun removePrefixIfExists(base64: String): String {
-        val prefix = "data:application/pdf;base64,"
-        return if (base64.startsWith(prefix)) {
-            base64.removePrefix(prefix)
+        val prefixStr = "data:application/pdf;base64,"
+        return if (base64.startsWith(prefixStr)) {
+            base64.removePrefix(prefixStr)
         } else {
             base64
         }

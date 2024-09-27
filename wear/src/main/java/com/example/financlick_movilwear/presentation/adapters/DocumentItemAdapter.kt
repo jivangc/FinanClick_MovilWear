@@ -17,11 +17,11 @@ class DocumentItemAdapter (private var documents: MutableList<DocItemModel>) : R
     }
 
     override fun onBindViewHolder(holder: DocumentViewHolder, position: Int) {
-        val product = documents[position]
-        holder.tvDocumentName.text = product.name
-        holder.tvTipoPersona.text = product.type
-        holder.tvDocumentStatus.text = product.status
-        holder.tvDocumentStatus.setTextColor(product.statusColor)
+        val productList = documents[position]
+        holder.tvDocumentName.text = productList.name
+        holder.tvTipoPersona.text = productList.type
+        holder.tvDocumentStatus.text = productList.status
+        holder.tvDocumentStatus.setTextColor(productList.statusColor)
     }
 
     override fun getItemCount(): Int = documents.size

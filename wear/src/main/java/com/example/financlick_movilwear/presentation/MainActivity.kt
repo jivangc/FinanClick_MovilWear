@@ -59,11 +59,11 @@ class MainActivity : ComponentActivity(), DataClient.OnDataChangedListener {
                 if (dataItem.uri.path == "/token") {
                     val dataMap = DataMapItem.fromDataItem(dataItem).dataMap
                     val token = dataMap.getString("token")
-                    val idCliente = dataMap.getInt("idCliente")
-                    if (token != null && idCliente != null) {
+                    val idClienteInt = dataMap.getInt("idCliente")
+                    if (token != null && idClienteInt != null) {
                         Log.i("LISTENER", "Se recibio el token de sesion: $token")
                         Toast.makeText(context, "Se ha recibido la sesion", Toast.LENGTH_SHORT ).show()
-                        session.saveToken(token, idCliente)
+                        session.saveToken(token, idClienteInt)
                         RetrofitClient.setToken(token)
                     } else {
                         Log.i("LISTENER", "El valor del token de sesion es NULL")

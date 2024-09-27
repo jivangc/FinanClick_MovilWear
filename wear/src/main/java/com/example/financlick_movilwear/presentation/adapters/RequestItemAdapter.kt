@@ -19,12 +19,12 @@ class RequestItemAdapter(private var products: MutableList<RequestModel>) :
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = products[position]
-        holder.tvProductName.text = product.name
-        holder.tvProductPrice.text = product.price
-        holder.tvProductCode.text = product.code
-        holder.tvProductStatus.text = product.status
-        holder.tvProductStatus.setTextColor(product.statusColor)
+        val productList = products[position]
+        holder.tvProductName.text = productList.name
+        holder.tvProductPrice.text = productList.price
+        holder.tvProductCode.text = productList.code
+        holder.tvProductStatus.text = productList.status
+        holder.tvProductStatus.setTextColor(productList.statusColor)
     }
 
     override fun getItemCount(): Int = products.size
